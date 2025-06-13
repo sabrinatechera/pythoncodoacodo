@@ -22,15 +22,17 @@ while True:
                 print("La categoría no puede estar vacía.")
                 continue
 
-            try:
-                precio = float(input("Ingrese el precio (entero, sin centavos): ").strip())
-                if not precio.is_integer() or precio <= 0:
-                    print("El precio debe ser un número entero mayor que cero.")
-                    continue
-                precio = int(precio)
-            except ValueError:
-                print("Error: Ingrese un número válido.")
+            
+            precio = (input("Ingrese el precio, sin centavos por favor): ").strip())
+            if '.' in precio or ',' in precio:
+                print("Por favor, ingrese un número entero sin decimales .")
                 continue
+
+            precio = int(precio)
+
+            if precio <= 0:
+                print("El precio debe ser mayor que cero.")
+                continue            
 
             productList.append([nombreProducto.title(), categoria.title(), precio])
             print(f"Producto '{nombreProducto.title()}' agregado correctamente.")
@@ -40,16 +42,16 @@ while True:
         if not productList:
             print("No hay productos registrados.")
         else:
-            print("Lista de Productos Registrados:")
+            print("****Lista de Productos Registrados****:")
             for i, p in enumerate(productList, 1):
                 print(f"{i}. Nombre: {p[0]}, Categoría: {p[1]}, Precio: ${p[2]}")
 
     elif opcion == "3":
-        termino = input(" Ingrese el nombre del producto a buscar: ").strip().lower()
-        encontrados = [p for p in productList if termino in p[0].lower()]
+        buscar = input(" Ingrese el nombre del producto a buscar: ").strip().lower()
+        encontrados = [p for p in productList if buscar in p[0].lower()]
 
         if encontrados:
-            print("📋 Productos encontrados:")
+            print("****Productos encontrados ****: ")
             for i, p in enumerate(encontrados, 1):
                 print(f"{i}. Nombre: {p[0]}, Categoría: {p[1]}, Precio: ${p[2]}")
         else:
@@ -59,10 +61,10 @@ while True:
         if not productList:
             print("No hay productos para eliminar.")
         else:
-            nombre_a_eliminar = input("Ingrese el nombre del producto a eliminar: ").strip().lower()
+            producto_Eliminar = input("Ingrese el nombre del producto a eliminar: ").strip().lower()
             encontrado = False
             for i, p in enumerate(productList):
-                if p[0].strip().lower() == nombre_a_eliminar:
+                if p[0].strip().lower() == producto_Eliminar:
                     eliminado = productList.pop(i)
                     print("Producto  eliminado exitosamente.")
                     encontrado = True
